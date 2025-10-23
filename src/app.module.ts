@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common';
-import { TasksModule } from './tasks/tasks.module';
+import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { TasksModule } from './tasks/tasks.module';
 
 @Module({
 	imports: [
-		MongooseModule.forRoot(
-			'mongodb+srv://nikitamalashkin73_db_user:cK01mFki6h9HF7CV@punishment-cluster.nplsx2u.mongodb.net/?retryWrites=true&w=majority&appName=punishment-cluster',
-		),
+		ConfigModule.forRoot({
+			isGlobal: true,
+		}),
+		MongooseModule.forRoot(process.env.MONGO_URI),
 		TasksModule,
 	],
-	controllers: [],
-	providers: [],
 })
 export class AppModule {}
